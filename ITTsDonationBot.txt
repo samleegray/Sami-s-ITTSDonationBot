@@ -3,12 +3,13 @@
 ## Description: Keeps on top of Donations, beep! Part of the ITTs Bot family, handy helpers for Trade Guilds.
 ## Version: 2.1.1
 ## AddOnVersion: 211
-## Author: |c00a313Ghostbane|r & |c268074JN Slevin|r
+## Author: |c00a313Ghostbane|r & |c268074JN Slevin|r & |cf939dasamihaize|r
 ## SavedVariables: ITTsDonationBotSettings ITTsDonationBotData
 ## DependsOn: LibAddonMenu-2.0>=33 LibChatMessage LibGuildRoster LibDebugLogger LibHistoire>=777 LibDebugLogger>=180 LibAddonMenuDatePicker
 ## OptionalDependsOn: PerfectPixel
 
 ITTsDonationBot.lua
+SettingsUI.lua
 i18n/en.lua
 i18n/$(language).lua
 ITTsDonationBot.xml
