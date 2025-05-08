@@ -39,8 +39,7 @@ local defaults = {
             queryTimeframe = "Last Week"
         }
     },
-    tooltip = {},
-    lottoBlacklist = "Type Names here"
+    tooltip = {}
 }
 
 local function inter( s, tab )
@@ -54,47 +53,86 @@ end
 
 -- Gets the start date to be used for the report queries.
 -- If none is already stored, it will be set to the current time.
-function SamiITTDB:GetStartDate()
+function SamiITTDB:GetStartDate( num )
     if not db.startDate then
-        db.startDate = GetTimeStamp()
+        db.startDate = {}
     end
-    return db.startDate
+    if not db.startDate[num] then
+        db.startDate[num] = GetTimeStamp()
+    end
+    return db.startDate[num]
 end
 
 -- Gets the end date to be used for the report queries.
 -- If none is already stored, it will be set to the current time.
-function SamiITTDB:GetEndDate()
+function SamiITTDB:GetEndDate( num )
     if not db.endDate then
-        db.endDate = GetTimeStamp()
+        db.endDate = {}
     end
-    return db.endDate
+    if not db.endDate[num] then
+        db.endDate[num] = GetTimeStamp()
+    end
+    return db.endDate[num]
 end
 
 -- Gets the first place winning percentage to be used for lotto calculations.
 -- If none is already stored, it will be set to 0.5 (50%).
-function SamiITTDB:GetFirstPlaceWinningPercentage()
+function SamiITTDB:GetFirstPlaceWinningPercentage( num )
+    db.firstPlaceWinningPercentage = nil
     if not db.firstPlaceWinningPercentage then
-        db.firstPlaceWinningPercentage = 0.5
+        db.firstPlaceWinningPercentage = {}
     end
-    return db.firstPlaceWinningPercentage
+    if not db.firstPlaceWinningPercentage[num] then
+        db.firstPlaceWinningPercentage[num] = 0.5
+    end
+    return db.firstPlaceWinningPercentage[num]
 end
 
 -- Gets the second place winning percentage to be used for lotto calculations.
 -- If none is already stored, it will be set to 0.0 (0%).
-function SamiITTDB:GetSecondPlaceWinningPercentage()
+function SamiITTDB:GetSecondPlaceWinningPercentage( num )
     if not db.secondPlaceWinningPercentage then
-        db.secondPlaceWinningPercentage = 0.0
+        db.secondPlaceWinningPercentage = {}
     end
-    return db.secondPlaceWinningPercentage
+    if not db.secondPlaceWinningPercentage[num] then
+        db.secondPlaceWinningPercentage[num] = 0.0
+    end
+    return db.secondPlaceWinningPercentage[num]
 end
 
 -- Gets the third place winning percentage to be used for lotto calculations.
 -- If none is already stored, it will be set to 0.0 (0%).
-function SamiITTDB:GetThirdPlaceWinningPercentage()
+function SamiITTDB:GetThirdPlaceWinningPercentage( num )
     if not db.thirdPlaceWinningPercentage then
-        db.thirdPlaceWinningPercentage = 0.0
+        db.thirdPlaceWinningPercentage = {}
     end
-    return db.thirdPlaceWinningPercentage
+    if not db.thirdPlaceWinningPercentage[num] then
+        db.thirdPlaceWinningPercentage[num] = 0.0
+    end
+    return db.thirdPlaceWinningPercentage[num]
+end
+
+-- Gets the lotto ticket value to be used for lotto calculations.
+-- If none is already stored, it will be set to 1000.
+function SamiITTDB:GetLottoTicketValue( num )
+    if not db.lottoTicketValue then
+        db.lottoTicketValue = {}
+    end
+    if not db.lottoTicketValue[num] then
+        db.lottoTicketValue[num] = 1000
+    end
+    return db.lottoTicketValue[num]
+end
+
+function SamiITTDB:GetLottoBlacklist( num )
+    if not db.lottoBlacklist then
+        db.lottoBlacklist = {}
+    end
+    if not db.lottoBlacklist[num] then
+        db.lottoBlacklist = {}
+        db.lottoBlacklist[num] = "Type Names here"
+    end
+    return db.lottoBlacklist[num]
 end
 
 function ITTsDonationBot:parse( str, args )
