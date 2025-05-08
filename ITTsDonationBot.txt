@@ -9,6 +9,7 @@
 ## OptionalDependsOn: PerfectPixel
 
 ITTsDonationBot.lua
+SettingsUI.lua
 i18n/en.lua
 i18n/$(language).lua
 ITTsDonationBot.xml
