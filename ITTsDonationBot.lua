@@ -12,9 +12,7 @@ local SECONDS_IN_HOUR = 60 * 60
 local SECONDS_IN_DAY = SECONDS_IN_HOUR * 24
 local SECONDS_IN_WEEK = SECONDS_IN_DAY * 7
 local worldName = GetWorldName()
-local winnerPercent = 0.5
-local startDate = GetTimeStamp()
-local endDate = GetTimeStamp()
+
 local defaults = {
     settings = {
         [ worldName ] = {
@@ -51,6 +49,51 @@ local function inter( s, tab )
             return tab[ w:sub( 3, -2 ) ] or w
         end
     ))
+end
+
+-- Gets the start date to be used for the report queries.
+-- If none is already stored, it will be set to the current time.
+local function GetStartDate()
+    if not db.startDate then
+        db.startDate = GetTimeStamp()
+    end
+    return db.startDate
+end
+
+-- Gets the end date to be used for the report queries.
+-- If none is already stored, it will be set to the current time.
+local function GetEndDate()
+    if not db.endDate then
+        db.endDate = GetTimeStamp()
+    end
+    return db.endDate
+end
+
+-- Gets the first place winning percentage to be used for lotto calculations.
+-- If none is already stored, it will be set to 0.5 (50%).
+local function GetFirstPlaceWinningPercentage()
+    if not db.firstPlaceWinningPercentage then
+        db.firstPlaceWinningPercentage = 0.5
+    end
+    return db.firstPlaceWinningPercentage
+end
+
+-- Gets the second place winning percentage to be used for lotto calculations.
+-- If none is already stored, it will be set to 0.0 (0%).
+local function GetSecondPlaceWinningPercentage()
+    if not db.secondPlaceWinningPercentage then
+        db.secondPlaceWinningPercentage = 0.0
+    end
+    return db.secondPlaceWinningPercentage
+end
+
+-- Gets the third place winning percentage to be used for lotto calculations.
+-- If none is already stored, it will be set to 0.0 (0%).
+local function GetThirdPlaceWinningPercentage()
+    if not db.thirdPlaceWinningPercentage then
+        db.thirdPlaceWinningPercentage = 0.0
+    end
+    return db.thirdPlaceWinningPercentage
 end
 
 function ITTsDonationBot:parse( str, args )
@@ -226,7 +269,7 @@ local function makeSettings()
     local function GetTicketsForPlayer( guildId, displayName )
         local ticketCost = tonumber( lottotTicketValue )
         local ticketCount = 0
-        local amounts = ITTsDonationBot:QueryIndividualValues( guildId, displayName, startDate, endDate )
+        local amounts = ITTsDonationBot:QueryIndividualValues( guildId, displayName, GetStartDate(), GetEndDate() )
         for i = 1, #amounts do
             local amount = amounts[i]
             if amount == ticketCost then
@@ -255,14 +298,7 @@ local function makeSettings()
         for i = 1, GetNumGuildMembers( guildId ) do
             local displayName = GetGuildMemberInfo( guildId, i )
             local name = string.gsub( displayName, "@", "" )
-            -- local startTime = 0
-            -- local endTime = 0
 
-            -- for reportIndex = 1, #ITTsDonationBot.reportQueries do
-            --     if ITTsDonationBot.reportQueries[ reportIndex ].name == db.settings[ worldName ].queryTimeframe then
-            --         startTime, endTime = ITTsDonationBot.reportQueries[ reportIndex ].range()
-            --     end
-            -- end
             if not PlainStringFind( string.lower( db.lottoBlacklist ), string.lower( name ) ) then
                 -- local totalAmount = ITTsDonationBot:QueryValues( guildId, displayName, startDate, endDate )
                 local ticketCount = GetTicketsForPlayer( guildId, displayName )
@@ -298,10 +334,10 @@ local function makeSettings()
         end
 
         -- Get the winning amount.
-        local winnerAmount = potAmount * winnerPercent
+        local firstPlaceWinningAmount = potAmount * GetFirstPlaceWinningPercentage()
 
         -- Update the text boxes
-        ITT_LottoTotalPot.editbox:SetText( winnerAmount )
+        ITT_LottoTotalPot.editbox:SetText( firstPlaceWinningAmount )
 
         ITT_LottoNameList.editbox:SetText( nameList )
         ITT_LottoAmountList.editbox:SetText( amountList )
@@ -472,16 +508,16 @@ local function makeSettings()
         type = "datepicker",
         name = "Start Date",
         width = "half",
-        getFunc = function() return startDate end,
-        setFunc = function( date ) startDate = date end,
+        getFunc = function() return GetStartDate() end,
+        setFunc = function( date ) db.startDate = date end,
     }
 
     lottoOptions[ #lottoOptions + 1 ] = {
         type = "datepicker",
         name = "End Date",
         width = "half",
-        getFunc = function() return endDate end,
-        setFunc = function( date ) endDate = date end,
+        getFunc = function() return GetEndDate() end,
+        setFunc = function( date ) db.endDate = date end,
     }
 
     lottoOptions[ #lottoOptions + 1 ] = {
