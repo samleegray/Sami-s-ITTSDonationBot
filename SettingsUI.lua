@@ -251,7 +251,22 @@ function ITTsDonationBot:MakeSettings( defaults, db, worldName )
     }
 
     lottoOptions[ #lottoOptions + 1 ] = {
+        type = "datepicker",
+        name = "Start Date",
+        width = "half",
+        getFunc = function() return SamiITTDB:GetStartDate() end,
+        setFunc = function( date ) db.startDate = date end,
+    }
 
+    lottoOptions[ #lottoOptions + 1 ] = {
+        type = "datepicker",
+        name = "End Date",
+        width = "half",
+        getFunc = function() return SamiITTDB:GetEndDate() end,
+        setFunc = function( date ) db.endDate = date end,
+    }
+
+    lottoOptions[ #lottoOptions + 1 ] = {
         type = "editbox",
         name = "Lotto blacklist",
         tooltip = "Blacklist names to be ignored in the list. Seperate each name with a comma",
@@ -261,22 +276,6 @@ function ITTsDonationBot:MakeSettings( defaults, db, worldName )
         width = "full",     --or "half" (optional)
         isExtraWide = true,
         default = "",       --(optional)
-    }
-
-    lottoOptions[ #lottoOptions + 1 ] = {
-        type = "datepicker",
-        name = "Start Date",
-        width = "half",
-        getFunc = function() return GetStartDate() end,
-        setFunc = function( date ) db.startDate = date end,
-    }
-
-    lottoOptions[ #lottoOptions + 1 ] = {
-        type = "datepicker",
-        name = "End Date",
-        width = "half",
-        getFunc = function() return GetEndDate() end,
-        setFunc = function( date ) db.endDate = date end,
     }
 
     lottoOptions[ #lottoOptions + 1 ] = {

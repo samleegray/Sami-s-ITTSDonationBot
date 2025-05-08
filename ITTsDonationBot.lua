@@ -1,6 +1,7 @@
 ITTsDonationBot = ZO_CallbackObject:New()
 ITTsDonationBot.name = "ITTsDonationBot"
 ITTsDonationBotListener = {}
+SamiITTDB = {}
 local db = {}
 local LAM2 = LibAddonMenu2
 local LH = LibHistoire
@@ -53,7 +54,7 @@ end
 
 -- Gets the start date to be used for the report queries.
 -- If none is already stored, it will be set to the current time.
-local function GetStartDate()
+function SamiITTDB:GetStartDate()
     if not db.startDate then
         db.startDate = GetTimeStamp()
     end
@@ -62,7 +63,7 @@ end
 
 -- Gets the end date to be used for the report queries.
 -- If none is already stored, it will be set to the current time.
-local function GetEndDate()
+function SamiITTDB:GetEndDate()
     if not db.endDate then
         db.endDate = GetTimeStamp()
     end
@@ -71,7 +72,7 @@ end
 
 -- Gets the first place winning percentage to be used for lotto calculations.
 -- If none is already stored, it will be set to 0.5 (50%).
-local function GetFirstPlaceWinningPercentage()
+function SamiITTDB:GetFirstPlaceWinningPercentage()
     if not db.firstPlaceWinningPercentage then
         db.firstPlaceWinningPercentage = 0.5
     end
@@ -80,7 +81,7 @@ end
 
 -- Gets the second place winning percentage to be used for lotto calculations.
 -- If none is already stored, it will be set to 0.0 (0%).
-local function GetSecondPlaceWinningPercentage()
+function SamiITTDB:GetSecondPlaceWinningPercentage()
     if not db.secondPlaceWinningPercentage then
         db.secondPlaceWinningPercentage = 0.0
     end
@@ -89,7 +90,7 @@ end
 
 -- Gets the third place winning percentage to be used for lotto calculations.
 -- If none is already stored, it will be set to 0.0 (0%).
-local function GetThirdPlaceWinningPercentage()
+function SamiITTDB:GetThirdPlaceWinningPercentage()
     if not db.thirdPlaceWinningPercentage then
         db.thirdPlaceWinningPercentage = 0.0
     end
@@ -142,11 +143,6 @@ local function OnPlayerActivated( eventCode )
     EVENT_MANAGER:UnregisterForEvent( ITTsDonationBot.name, eventCode )
 
     ITTsDonationBot:Initialize()
-end
-
-local function CreateWithdrawRecords(world_name)
-    ITTsDonationBotData.withdraw_records = {}
-    ITTsDonationBotData.withdraw_records[ worldName ] = {}
 end
 
 local function ITTsDonationBot_OnAddOnLoaded( eventCode, addOnName )
