@@ -506,6 +506,22 @@ function ITTsDonationBot:MakeSettings( defaults, db, worldName )
         ITTDLabel:SetHorizontalAlignment( 1 )
         ITTDLabel:SetAnchor( TOP, ITTsDonationBotSettingsLogoTitle, BOTTOM, 0, -5 )
 
+        local LRTitle = WINDOW_MANAGER:CreateControl( "ITTsDonationBotSettingsLogoTitle2", ITT_DonationBotSettingsLogo,
+            CT_LABEL )
+        LRTitle:SetFont( "$(BOLD_FONT)|$(KB_18)|soft-shadow-thin" )
+        LRTitle:SetText( "|cf939daLETHAL REJECTION" )
+        LRTitle:SetDimensions( 240, 31 )
+        LRTitle:SetHorizontalAlignment( 1 )
+        LRTitle:SetAnchor( TOP, ITTsDonationBotSettingsLogoTitle, BOTTOM, 0, 40 )
+
+        local LRLabel = WINDOW_MANAGER:CreateControl( "ITTsDonationBotSettingsLogoTitleServer2",
+            ITTsDonationBotSettingsLogoTitle, CT_LABEL )
+        LRLabel:SetFont( "$(MEDIUM_FONT)|$(KB_16)|soft-shadow-thick" )
+        LRLabel:SetText( "|C646464PC NA" )
+        LRLabel:SetDimensions( 240, 21 )
+        LRLabel:SetHorizontalAlignment( 1 )
+        LRLabel:SetAnchor( TOP, ITTsDonationBotSettingsLogoTitle2, BOTTOM, 0, -5 )
+
         ITT_HideMePls:SetHidden( true )
 
         if db.records == nil then
