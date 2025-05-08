@@ -12,6 +12,84 @@ local SECONDS_IN_WEEK = SECONDS_IN_DAY * 7
 
 local worldName = GetWorldName()
 
+-- Required by ITTDonationBotRoster
+ITTsDonationBot.reportQueries = {
+    {
+        name = ITTsDonationBot:parse( "TIME_TODAY" ),
+        range = function()
+            return ITTsDonationBot:GetTimestampOfDayStart( 0 ), GetTimeStamp()
+        end
+    },
+    {
+        name = ITTsDonationBot:parse( "TIME_YESTERDAY" ),
+        range = function()
+            return ITTsDonationBot:GetTimestampOfDayStart( 1 ), ITTsDonationBot:GetTimestampOfDayStart( 0 )
+        end
+    },
+    {
+        name = ITTsDonationBot:parse( "TIME_2_DAYS" ),
+        range = function()
+            return ITTsDonationBot:GetTimestampOfDayStart( 2 ), ITTsDonationBot:GetTimestampOfDayStart( 1 )
+        end
+    },
+    {
+        name = ITTsDonationBot:parse( "TIME_THIS_WEEK" ),
+        range = function()
+            return ITTsDonationBot:GetTraderWeekStart(), ITTsDonationBot:GetTraderWeekEnd()
+        end
+    },
+    {
+        name = ITTsDonationBot:parse( "TIME_LAST_WEEK" ),
+        range = function()
+            return ITTsDonationBot:GetTraderWeekStart() - SECONDS_IN_WEEK, ITTsDonationBot:GetTraderWeekStart()
+        end
+    },
+    {
+        name = ITTsDonationBot:parse( "TIME_PRIOR_WEEK" ),
+        range = function()
+            return ITTsDonationBot:GetTraderWeekStart() - (SECONDS_IN_WEEK * 2),
+                ITTsDonationBot:GetTraderWeekStart() - SECONDS_IN_WEEK
+        end
+    },
+    {
+        name = ITTsDonationBot:parse( "TIME_7_DAYS" ),
+        range = function()
+            return ITTsDonationBot:GetTimestampOfDayStart( 7 ), GetTimeStamp()
+        end
+    },
+    {
+        name = ITTsDonationBot:parse( "TIME_10_DAYS" ),
+        range = function()
+            return ITTsDonationBot:GetTimestampOfDayStart( 10 ), GetTimeStamp()
+        end
+    },
+    {
+        name = ITTsDonationBot:parse( "TIME_14_DAYS" ),
+        range = function()
+            return ITTsDonationBot:GetTimestampOfDayStart( 14 ), GetTimeStamp()
+        end
+    },
+    {
+        name = ITTsDonationBot:parse( "TIME_30_DAYS" ),
+        range = function()
+            return ITTsDonationBot:GetTimestampOfDayStart( 30 ), GetTimeStamp()
+        end
+    },
+    {
+        name = ITTsDonationBot:parse( "TIME_31_DAYS" ),
+        range = function()
+            return ITTsDonationBot:GetTimestampOfDayStart( 31 ), GetTimeStamp()
+        end
+    },
+    {
+        name = ITTsDonationBot:parse( "TIME_TOTAL" ),
+        range = function()
+            return 0, GetTimeStamp()
+        end
+    }
+}
+-- End of required by ITTDonationBotRoster
+
 local function DonationsTooltip_GetInfo( control, displayName )
     local data = ITTsDonationBot:GetTooltipCache( GUILD_ROSTER_MANAGER.guildId, displayName )
 
